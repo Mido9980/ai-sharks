@@ -1,1 +1,1 @@
-[{"relation":["delegate_permission/common.handle_all_urls"],"target":{"namespace":"android_app","package_name":"co.easycode.aisharks","sha256_cert_fingerprints":[""]}}]
+[{"relation":["delegate_permission/common.handle_all_urls"],"target":{"namespace":"android_app","package_name":"co.easycode.aisharks","sha256_cert_fingerprints":["7D:B1:4F:5B:E0:5F:BA:B3:96:98:ED:52:82:85:44:8E:93:46:88:3C:9A:FC:32:28:3B:66:57:D9:EE:01:D4:C3"]}}]
