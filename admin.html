@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>لوحة إدارة الوكلاء — AI Sharks</title>
+<meta name="robots" content="noindex">
+<style>
+:root{--bg:#07090f;--card:#101623;--line:rgba(232,195,106,.2);--gold:#e8c36a;--txt:#eef2f8;--mut:#93a3b5;--ok:#3ddc97;--warn:#ffb84d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:'Segoe UI',Tahoma,sans-serif;line-height:1.7}
+.wrap{max-width:1000px;margin:0 auto;padding:22px 16px 60px}
+h1{font-size:22px;margin:0 0 4px;color:var(--gold)}
+p.sub{color:var(--mut);font-size:13.5px;margin:0 0 18px}
+input,button,select,textarea{font-family:inherit;font-size:14px}
+input,textarea{background:#0a1018;border:1px solid rgba(255,255,255,.1);color:var(--txt);border-radius:10px;padding:10px 12px;width:100%}
+.btn{background:linear-gradient(135deg,#f6dd9c,var(--gold));color:#141007;border:none;border-radius:999px;padding:11px 20px;font-weight:700;cursor:pointer}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0 20px}
+.stat{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px}
+.stat b{display:block;font-size:20px;color:var(--gold)}
+.stat span{font-size:12px;color:var(--mut)}
+.t{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px;margin-bottom:10px}
+.t .top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center}
+.t b{font-size:15.5px}
+.badge{font-size:11px;padding:3px 10px;border-radius:999px;font-weight:700}
+.b-active{background:rgba(61,220,151,.15);color:var(--ok)}
+.b-pending{background:rgba(255,184,77,.15);color:var(--warn)}
+.b-paused{background:rgba(255,255,255,.1);color:var(--mut)}
+.meta{color:var(--mut);font-size:12.5px;margin:6px 0 10px}
+.link{color:var(--gold);font-size:12.5px;word-break:break-all}
+textarea{min-height:70px;margin-top:8px}
+.hide{display:none}
+#msg{margin-top:10px;font-size:13.5px}
+@media(max-width:700px){.stats{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>لوحة إدارة الوكلاء</h1>
+  <p class="sub">إدارة العملاء المستأجرين لوكيل AI Sharks — تفعيل، إيقاف، تعديل البيانات.</p>
+
+  <div id="login" class="row">
+    <input id="pass" type="password" placeholder="كلمة السر" style="max-width:260px">
+    <button class="btn" id="loginBtn">دخول</button>
+    <span id="msg"></span>
+  </div>
+
+  <div id="panel" class="hide">
+    <div class="stats" id="stats"></div>
+    <div class="row" style="margin-bottom:14px">
+      <button class="btn ghost" id="refresh">تحديث</button>
+      <button class="btn ghost" id="cfgBtn">إعدادات المحفظة</button>
+    </div>
+    <div id="list"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var API='https://shark-vision-labs.base44.app/functions/sharkAdmin';
+  var pass='', msg=document.getElementById('msg');
+  function call(body){ body.password=pass; return fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}); }
+  function el(h){var d=document.createElement('div');d.innerHTML=h;return d.firstElementChild;}
+
+  document.getElementById('loginBtn').onclick=function(){
+    pass=document.getElementById('pass').value;
+    call({action:'login'}).then(function(d){
+      if(!d.ok){msg.textContent=d.error||'خطأ';return;}
+      document.getElementById('login').classList.add('hide');
+      document.getElementById('panel').classList.remove('hide');
+      load();
+    });
+  };
+
+  function load(){
+    call({action:'stats'}).then(function(s){
+      if(!s.ok){msg.textContent=s.error||'';return;}
+      document.getElementById('stats').innerHTML=
+        '<div class="stat"><b>'+s.total+'</b><span>إجمالي العملاء</span></div>'+
+        '<div class="stat"><b>'+s.active+'</b><span>مفعّل</span></div>'+
+        '<div class="stat"><b>'+s.pending+'</b><span>مستني تفعيل</span></div>'+
+        '<div class="stat"><b>'+s.mrr+'</b><span>إيراد شهري (جنيه)</span></div>';
+    });
+    call({action:'list'}).then(function(d){
+      if(!d.ok){return;}
+      var box=document.getElementById('list'); box.innerHTML='';
+      (d.tenants||[]).forEach(function(t){
+        var card=el('<div class="t">'+
+          '<div class="top"><b>'+t.name+'</b><span class="badge b-'+(t.status||'pending')+'">'+(t.status==='active'?'مفعّل':t.status==='paused'?'موقوف':'مستني')+'</span></div>'+
+          '<div class="meta">'+t.phone+' · '+t.plan+' · '+t.fee+' ج/شهر · رسائل: '+(t.msg_used||0)+'/'+(t.msg_limit||0)+' · ينتهي: '+(t.paid_until||'—')+' · مرجع الدفع: '+(t.last_pay_ref||'—')+'</div>'+
+          '<div class="link">https://mido9980.github.io/ai-sharks/chat.html?t='+t.slug+'</div>'+
+          '<textarea data-k="knowledge" placeholder="بيانات الشركة (منتجات، أسعار، سياسات)">'+(t.knowledge||'')+'</textarea>'+
+          '<div class="row" style="margin-top:8px">'+
+            '<input type="date" data-k="paid_until" value="'+(t.paid_until||'')+'" style="max-width:170px">'+
+            '<button class="btn ghost" data-act="active">تفعيل</button>'+
+            '<button class="btn ghost" data-act="paused">إيقاف</button>'+
+            '<button class="btn" data-save="1">حفظ</button>'+
+          '</div></div>');
+        card.querySelectorAll('[data-act]').forEach(function(b){
+          b.onclick=function(){ call({action:'set',id:t.id,status:b.getAttribute('data-act')}).then(load); };
+        });
+        card.querySelector('[data-save]').onclick=function(){
+          var body={action:'set',id:t.id};
+          card.querySelectorAll('[data-k]').forEach(function(f){ body[f.getAttribute('data-k')]=f.value; });
+          call(body).then(function(r){ msg.textContent = r.ok ? 'تم الحفظ' : (r.error||'خطأ'); load(); });
+        };
+        box.appendChild(card);
+      });
+    });
+  }
+
+  document.getElementById('refresh').onclick=load;
+  document.getElementById('cfgBtn').onclick=function(){
+    var n=prompt('رقم المحفظة'); if(n===null) return;
+    var t=prompt('نوع المحفظة','اتصالات كاش'); if(t===null) return;
+    var p=prompt('كلمة سر جديدة (اتركها فاضية لو مش عايز تغيّرها)',''); 
+    var body={action:'config',wallet_number:n,wallet_type:t};
+    if(p) body.admin_password=p;
+    call(body).then(function(r){ msg.textContent=r.ok?'تم الحفظ':(r.error||'خطأ'); });
+  };
+})();
+</script>
+</body>
+</html>

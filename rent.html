@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>استأجر وكيل ذكاء اصطناعي لشركتك — AI Sharks</title>
+<meta name="description" content="وكيل ذكاء اصطناعي بالشهر لشركتك: بيرد على عملائك 24 ساعة، بيتدرب على بياناتك، وأمان أولاً. باقات من 1,900 جنيه شهرياً.">
+<link rel="icon" href="icons/i192.png">
+<style>
+:root{--bg:#07090f;--card:#101623;--line:rgba(232,195,106,.18);--line2:rgba(255,255,255,.07);--gold:#e8c36a;--gold2:#f6dd9c;--cyan:#49d6e8;--txt:#eef2f8;--mut:#9aa6b8;--ok:#3ddc97}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(1000px 600px at 85% -10%,rgba(232,195,106,.12),transparent 60%),radial-gradient(800px 500px at 5% 10%,rgba(73,214,232,.08),transparent 60%),var(--bg);color:var(--txt);font-family:'Segoe UI',Tahoma,sans-serif;line-height:1.8}
+.wrap{width:min(1080px,92vw);margin:0 auto}
+header{padding:16px 0;border-bottom:1px solid var(--line2);display:flex;justify-content:space-between;align-items:center;gap:14px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:18px}
+.brand img{width:34px;height:34px;border-radius:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border-radius:999px;padding:13px 24px;font-weight:700;font-size:15px;border:1px solid transparent;cursor:pointer;text-decoration:none}
+.gold{background:linear-gradient(135deg,var(--gold2),var(--gold));color:#141007}
+.ghost{border-color:var(--line);color:var(--txt);background:rgba(255,255,255,.02)}
+h1{font-size:clamp(28px,4.6vw,44px);line-height:1.3;margin:34px 0 14px;font-weight:800}
+h1 em{font-style:normal;background:linear-gradient(100deg,var(--gold2),var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:#c2cbd9;font-size:17px;max-width:60ch;margin:0 0 24px}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--gold);border:1px solid var(--line);background:rgba(232,195,106,.07);padding:6px 14px;border-radius:999px;margin-bottom:16px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--ok)}
+section{padding:36px 0}
+h2{font-size:clamp(21px,3vw,30px);margin:0 0 8px}
+.sub{color:var(--mut);margin:0 0 22px;font-size:15px}
+.grid{display:grid;gap:16px}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g2{grid-template-columns:repeat(2,1fr)}
+.card{background:linear-gradient(170deg,var(--card),#0d1420);border:1px solid var(--line2);border-radius:18px;padding:20px}
+.card h3{margin:0 0 6px;font-size:16px}
+.card p{margin:0;color:var(--mut);font-size:13.8px}
+.plan{display:flex;flex-direction:column}
+.plan.hot{border-color:rgba(232,195,106,.55);box-shadow:0 24px 60px -40px rgba(232,195,106,.8);position:relative}
+.plan.hot:after{content:"الأكثر طلباً";position:absolute;top:-12px;left:20px;background:var(--gold);color:#161006;font-size:11px;font-weight:800;padding:4px 12px;border-radius:999px}
+.price{font-size:30px;font-weight:800;color:var(--gold2);margin:6px 0 2px}
+.price small{font-size:12.5px;color:var(--mut);font-weight:500}
+.plan ul{list-style:none;margin:14px 0 18px;padding:0;display:grid;gap:7px;font-size:13.6px;color:#c9d3e1;flex:1}
+.plan ul li:before{content:"✓";color:var(--ok);margin-left:8px;font-weight:800}
+form{display:grid;gap:12px}
+label{font-size:13.5px;color:#cfd8e5;display:block;margin-bottom:5px}
+input,select,textarea{width:100%;background:#0a1018;border:1px solid var(--line2);color:var(--txt);border-radius:12px;padding:12px 14px;font-family:inherit;font-size:14.5px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--line)}
+textarea{min-height:92px;resize:vertical}
+.note{background:rgba(232,195,106,.06);border:1px solid var(--line);border-radius:14px;padding:16px;font-size:13.5px;color:#dbe3ee}
+.ok{background:rgba(61,220,151,.08);border:1px solid rgba(61,220,151,.3);border-radius:14px;padding:16px;font-size:14px;color:#d7f7e8}
+.err{color:#ffb4a2;font-size:13.5px}
+code{background:rgba(255,255,255,.07);padding:2px 7px;border-radius:6px;font-size:13px}
+footer{border-top:1px solid var(--line2);padding:22px 0 40px;color:var(--mut);font-size:12.5px;text-align:center}
+@media(max-width:860px){.g3,.g2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand"><img src="icons/i192.png" alt="">AI Sharks <span style="font-size:11px;color:var(--mut);font-weight:500">EASY CODE</span></div>
+  <a class="btn ghost" href="index.html">شوف الوكيل</a>
+</header>
+
+<section>
+  <div class="pill"><span class="dot"></span> اشتراك شهري — بدون تكاليف تأسيس</div>
+  <h1>استأجر <em>وكيل ذكاء اصطناعي</em> يشتغل بدال فريق كامل</h1>
+  <p class="lead">بنديك وكيل جاهز باسم شركتك، مدرَّب على منتجاتك وأسعارك، بيرد على عملائك 24 ساعة على موقعك أو واتساب. تدفع بالشهر، وتقدر توقف في أي وقت.</p>
+  <a class="btn gold" href="#start">ابدأ التأسيس الآن</a>
+</section>
+
+<section>
+  <h2>إيه اللي بتاخده</h2>
+  <p class="sub">كل باقة فيها الأساسيات دي، والفرق في حجم الاستخدام والتكاملات.</p>
+  <div class="grid g3">
+    <div class="card"><h3>وكيل باسم شركتك</h3><p>لينك خاص وصفحة شات بهوية براندك، وتحية مخصصة وسياساتك.</p></div>
+    <div class="card"><h3>مدرَّب على بياناتك</h3><p>بندخل المنيو والأسعار والسياسات، فمش بيرد كلام عام.</p></div>
+    <div class="card"><h3>أمان أولاً</h3><p>المفاتيح على السيرفر، الكود محجوب، حدود استخدام، وحواجز أخلاقية.</p></div>
+    <div class="card"><h3>لوحة تحكم</h3><p>تعدّل الردود والبيانات، وتشوف عدد الرسائل المستهلكة.</p></div>
+    <div class="card"><h3>تقارير شهرية</h3><p>أكتر الأسئلة، والمواضيع اللي بيحوّلها لفريقك.</p></div>
+    <div class="card"><h3>إلغاء بضغطة</h3><p>اشتراك شهري، مفيش ارتباط سنوي ولا غرامات.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>الباقات الشهرية</h2>
+  <p class="sub">السعر شهري، والرسائل بعدد الرسائل اللي الوكيل بيرد عليها.</p>
+  <div class="grid g3">
+    <div class="card plan">
+      <h3>أساسي</h3>
+      <div class="price">1,900 <small>جنيه / شهر</small></div>
+      <ul><li>وكيل واحد على قناة واحدة</li><li>1,500 رسالة شهرياً</li><li>تدريب على بيانات أساسية</li><li>دعم بالإيميل</li></ul>
+      <button class="btn ghost" data-plan="basic">اختار أساسي</button>
+    </div>
+    <div class="card plan hot">
+      <h3>احترافي</h3>
+      <div class="price">3,900 <small>جنيه / شهر</small></div>
+      <ul><li>موقع + واتساب مع بعض</li><li>6,000 رسالة شهرياً</li><li>3 شخصيات (دعم/مبيعات/متابعة)</li><li>تقارير شهرية ودعم أسرع</li></ul>
+      <button class="btn gold" data-plan="pro">اختار احترافي</button>
+    </div>
+    <div class="card plan">
+      <h3>أعمال</h3>
+      <div class="price">7,900 <small>جنيه / شهر</small></div>
+      <ul><li>كل اللي في الاحترافي</li><li>20,000 رسالة شهرياً</li><li>ربط أنظمة وأتمتة مهام</li><li>مدير حساب وأولوية دعم</li></ul>
+      <button class="btn ghost" data-plan="business">اختار أعمال</button>
+    </div>
+  </div>
+</section>
+
+<section id="start">
+  <h2>أسّس وكيلك في دقيقتين</h2>
+  <p class="sub">املا البيانات، وبنبعتلك لينك الوكيل بعد تأكيد التحويل.</p>
+  <div class="grid g2">
+    <div class="card">
+      <form id="f">
+        <div><label>اسم الشركة</label><input id="name" required placeholder="مثال: كشري كيو"></div>
+        <div><label>رقم الموبايل / واتساب</label><input id="phone" required placeholder="01xxxxxxxxx" inputmode="tel"></div>
+        <div><label>نشاط الشركة</label><input id="business" placeholder="مطعم، عيادة، متجر ملابس…"></div>
+        <div><label>الباقة</label><select id="plan"><option value="basic">أساسي — 1,900 جنيه/شهر</option><option value="pro">احترافي — 3,900 جنيه/شهر</option><option value="business">أعمال — 7,900 جنيه/شهر</option></select></div>
+        <div><label>بيانات الوكيل (منتجات، أسعار، سياسات، مواعيد)</label><textarea id="knowledge" placeholder="مثال: منيو، أسعار، مواعيد العمل، سياسة الاسترجاع…"></textarea></div>
+        <button class="btn gold" type="submit" id="submitBtn">أسّس الوكيل</button>
+        <div id="msg"></div>
+      </form>
+    </div>
+    <div>
+      <div class="note" id="payNote">
+        <b>طريقة الدفع</b><br>
+        تحويل على محفظة <span id="wtype">اتصالات كاش</span>: <code id="wnum">01000000000</code><br>
+        بعد التحويل ابعت رقم العملية على واتساب، وهيتم تفعيل الوكيل خلال ساعات العمل.
+        <br><br>
+        <b>ملحوظة:</b> الاشتراك شهري ويتجدد بنفس القيمة، وتقدر تلغي في أي وقت قبل التجديد.
+      </div>
+      <div class="note" style="margin-top:14px">
+        <b>الأمان</b><br>
+        الكود المصدري والتعليمات والمفاتيح ملك EASY CODE ومش بتوصل للعميل. انت بتستأجر الوكيل جاهز، وملكية بياناتك تفضل لك.
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>AI Sharks — من EASY CODE · Apps Made Easy</footer>
+</div>
+<script>
+(function(){
+  var API='https://shark-vision-labs.base44.app/functions/sharkTenant';
+  var f=document.getElementById('f'),msg=document.getElementById('msg'),btn=document.getElementById('submitBtn'),planSel=document.getElementById('plan');
+  document.querySelectorAll('[data-plan]').forEach(function(b){
+    b.addEventListener('click',function(){planSel.value=b.getAttribute('data-plan');document.getElementById('start').scrollIntoView({behavior:'smooth'});});
+  });
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    btn.disabled=true;msg.innerHTML='';
+    var body={action:'signup',name:document.getElementById('name').value,phone:document.getElementById('phone').value,business:document.getElementById('business').value,plan:planSel.value,knowledge:document.getElementById('knowledge').value};
+    fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.ok){
+          msg.className='ok';
+          msg.innerHTML='تم إنشاء الوكيل ✅<br>لينك الوكيل: <a href="'+d.link+'" target="_blank">'+d.link+'</a><br>الباقة: '+d.plan+' — '+d.fee+' جنيه شهرياً.<br>حوّل المبلغ وابعت رقم العملية، وبعدها الوكيل يتفعّل.';
+        } else { msg.className='err'; msg.textContent=d.error||'حصلت مشكلة'; }
+      })
+      .catch(function(){msg.className='err';msg.textContent='تعذر الاتصال، جرب تاني.';})
+      .finally(function(){btn.disabled=false;});
+  });
+})();
+</script>
+</body>
+</html>
