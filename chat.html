@@ -44,13 +44,43 @@ button:disabled{opacity:.5}
   function bubble(text,who){var d=document.createElement('div');d.className='msg '+who;d.textContent=text;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;}
   function typing(){var d=document.createElement('div');d.className='typing';d.innerHTML='<i></i><i></i><i></i>';chat.appendChild(d);chat.scrollTop=chat.scrollHeight;return d;}
   if(!slug){chat.innerHTML='<div class="err">الرابط غير صحيح — تواصل مع الشركة.</div>';form.style.display='none';return;}
+  var CK='sharks_t_'+slug, QK='sharks_qa_'+slug;
+  function readJ(k,def){try{return JSON.parse(localStorage.getItem(k))||def;}catch(e){return def;}}
+  function writeJ(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+  function offlineAnswer(text){
+    var pairs=readJ(QK,[]);
+    var words=text.split(/[\s،,.؟!?]+/).filter(function(w){return w.length>2;});
+    var best=null,bestScore=0;
+    pairs.forEach(function(p){
+      var score=words.filter(function(w){return p.q.indexOf(w)>=0;}).length;
+      if(score>bestScore){bestScore=score;best=p;}
+    });
+    if(best&&bestScore>0) return '(من الذاكرة — أوفلاين) '+best.a;
+    return 'أنا شغال أوفلاين دلوقتي ومش قادر أوصل للذكاء الاصطناعي. لو حابب، اسألني سؤال جربته قبل كده وأنا أجاوبك من اللي محفوظ عندي.';
+  }
+  function savePair(a,b){
+    var pairs=readJ(QK,[]);
+    pairs.push({q:a,a:b});
+    if(pairs.length>60) pairs=pairs.slice(-60);
+    writeJ(QK,pairs);
+  }
   fetch(API+'?slug='+encodeURIComponent(slug)).then(function(r){return r.json();}).then(function(d){
     if(!d.ok){chat.innerHTML='<div class="err">'+(d.error||'الوكيل غير متاح')+'</div>';form.style.display='none';return;}
     tname.textContent=d.tenant.name;
     document.title=d.tenant.name;
+    writeJ(CK,d.tenant);
     bubble(d.tenant.greeting,'bot');
     if(d.tenant.status!=='active'){bubble('الخدمة مش مفعّلة حالياً، تواصل مع الشركة مباشرة.','bot');form.style.display='none';}
-  }).catch(function(){chat.innerHTML='<div class="err">تعذر الاتصال — جرب تحديث الصفحة.</div>';});
+  }).catch(function(){
+    var c=readJ(CK,null);
+    if(c){
+      tname.textContent=c.name;
+      document.title=c.name;
+      bubble((c.greeting||'أهلاً بيك')+'\n\n(أوفلاين — الردود من الذاكرة المحلية)','bot');
+    } else {
+      chat.innerHTML='<div class="err">تعذر الاتصال — جرب تحديث الصفحة.</div>';
+    }
+  });
   function ask(text){
     text=(text||'').trim(); if(!text||busy) return;
     busy=true;send.disabled=true;
@@ -60,14 +90,15 @@ button:disabled{opacity:.5}
       .then(function(r){return r.json();})
       .then(function(d){
         t.remove();
-        if(d.ok){bubble(d.reply,'bot');hist.push({role:'assistant',content:d.reply});}
+        if(d.ok){bubble(d.reply,'bot');hist.push({role:'assistant',content:d.reply});savePair(text,d.reply);}
         else bubble(d.error||'حصلت مشكلة، جرب تاني.','bot');
       })
-      .catch(function(){t.remove();bubble('النت قطع — جرب تاني.','bot');})
+      .catch(function(){t.remove();bubble(offlineAnswer(text),'bot');})
       .finally(function(){busy=false;send.disabled=false;q.focus();});
   }
   form.addEventListener('submit',function(e){e.preventDefault();ask(q.value);});
 })();
 </script>
+<script>if('serviceWorker' in navigator){addEventListener('load',function(){navigator.serviceWorker.register('sw.js').catch(function(){});});}</script>
 </body>
 </html>
